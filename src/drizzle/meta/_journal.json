@@ -15,6 +15,13 @@
       "when": 1758698492193,
       "tag": "0001_careful_blue_blade",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1758709776149,
+      "tag": "0002_special_steve_rogers",
+      "breakpoints": true
     }
   ]
 }

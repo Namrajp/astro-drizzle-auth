@@ -14,8 +14,16 @@ export const categories = pgTable(
   {
     id: serial().primaryKey().notNull(),
     name: text().notNull(),
+    userId: text("user_id").notNull(),
   },
-  (table) => [unique("categories_name_key").on(table.name)]
+  (table) => [
+    unique("categories_name_key").on(table.name),
+    foreignKey({
+      columns: [table.userId],
+      foreignColumns: [user.id],
+      name: "categories_user_id_fkey",
+    }).onDelete("cascade"),
+  ]
 );
 
 export const tasks = pgTable(
@@ -26,6 +34,7 @@ export const tasks = pgTable(
     done: boolean().default(false),
     createdAt: timestamp("created_at", { mode: "string" }).defaultNow(),
     categoryId: integer("category_id"),
+    userId: text("user_id").notNull(),
   },
   (table) => [
     foreignKey({
@@ -33,6 +42,11 @@ export const tasks = pgTable(
       foreignColumns: [categories.id],
       name: "tasks_category_id_fkey",
     }).onDelete("set null"),
+    foreignKey({
+      columns: [table.userId],
+      foreignColumns: [user.id],
+      name: "tasks_user_id_fkey",
+    }).onDelete("cascade"),
   ]
 );
 
